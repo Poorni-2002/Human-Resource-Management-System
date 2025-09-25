@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h2>Payroll Report</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Employee</th>
+                <th>Month</th>
+                <th>Basic</th>
+                <th>Allowances</th>
+                <th>Deductions</th>
+                <th>Net Salary</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in payrolls %}
+            <tr>
+                <td>{{ p.employee.first_name }} {{ p.employee.last_name }}</td>
+                <td>{{ p.month|date:"Y-m" }}</td>
+                <td>{{ p.basic_salary }}</td>
+                <td>{{ p.total_allowances }}</td>
+                <td>{{ p.total_deductions }}</td>
+                <td>{{ p.net_salary }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

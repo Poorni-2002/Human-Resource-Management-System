@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if request.user.userprofile.role == 'admin' %}
+<a href="{% url 'payrolls:create_monthly_payrolls' %}" class="btn btn-primary mb-3">Generate Monthly Payrolls</a>
+ {% endif %}
+
+<form method="get" class="row g-3 mb-3">
+
+  <!-- Employee Name Text Input -->
+  <div class="col-md-4">
+    <label for="employee_name" class="form-label">Employee Name:</label>
+    <input
+      type="text"
+      id="employee_name"
+      name="employee_name"
+      class="form-control"
+      value="{{ request.GET.employee_name|default:'' }}"
+      placeholder="Type employee name"
+      autocomplete="off"
+    >
+  </div>
+
+  <!-- Month Dropdown -->
+  <div class="col-md-3">
+    <label for="month" class="form-label">Month:</label>
+    <select name="month" id="month" class="form-control">
+      <option value="">All Months</option>
+      {% for m in months %}
+        <option value="{{ m.0 }}" {% if request.GET.month == m.0|stringformat:"s" %}selected{% endif %}>
+          {{ m.1 }}
+        </option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <!-- Year Text Input -->
+  <div class="col-md-2">
+    <label for="year" class="form-label">Year:</label>
+    <input
+      type="number"
+      id="year"
+      name="year"
+      class="form-control"
+      min="1900"
+      max="2100"
+      value="{{ request.GET.year|default:'' }}"
+      placeholder="YYYY"
+    >
+  </div>
+
+  <!-- Submit Button -->
+  <div class="col-md-3 d-flex align-items-end">
+    <button type="submit" class="btn btn-primary w-100">Filter</button>
+  </div>
+
+</form>
+
+
+
+<a href="{% url 'payrolls:export_payroll_pdf' %}?employee_name={{ employee_name }}&month={{ selected_month }}&year={{ selected_year }}" class="btn btn-danger mb-2">
+  Export to PDF
+</a>
+
+
+
+<div class="container mt-4">
+    <h2><b>Payroll Records</b></h2>
+    <table class="table table-striped table-bordered">
+        <thead class="table-primary">
+            <tr>
+                <th>Employee</th>
+                <th>Month</th>
+                <th>Basic</th>
+                <th>Allowances</th>
+                <th>Deductions</th>
+                <th>Net</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for payroll in payrolls %}
+            <tr>
+                <td>{{ payroll.employee }}</td>
+                <td>{{ payroll.month|date:"F Y" }}</td>
+                <td>{{ payroll.basic_salary }}</td>
+                <td>{{ payroll.total_allowances }}</td>
+                <td>{{ payroll.total_deductions }}</td>
+                <td>{{ payroll.net_salary }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

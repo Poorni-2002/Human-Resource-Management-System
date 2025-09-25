@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}{{ performance|default_if_none:"Add New" }} Performance{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">{{ performance|yesno:"Update Performance,Add New Performance" }}</h2>
+
+    <form method="post" class="border p-4 bg-light rounded shadow-sm">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="employee" class="form-label">Employee</label>
+            <select class="form-select" id="employee" name="employee" required>
+                <option value="">Select Employee</option>
+                {% for employee in employees %}
+                    <option value="{{ employee.id }}"
+                        {% if performance and performance.employee.id == employee.id %} selected {% endif %}>
+                        {{ employee.first_name }} {{ employee.last_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="review_date" class="form-label">Review Date</label>
+            <input type="date" class="form-control" id="review_date" name="review_date"
+                   value="{{ performance.review_date|date:'Y-m-d' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="score" class="form-label">Performance Score (1-5)</label>
+            <input type="number" class="form-control" id="score" name="score"
+                   min="1" max="5" value="{{ performance.score }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="feedback" class="form-label">Feedback</label>
+            <textarea class="form-control" id="feedback" name="feedback" rows="4"
+                      placeholder="Enter performance feedback...">{{ performance.feedback }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Save</button>
+        <a href="{% url 'performance:performance_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

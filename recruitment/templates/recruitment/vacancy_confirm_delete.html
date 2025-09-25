@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="alert alert-warning p-4 rounded-3 shadow-sm">
+        <h4>Are you sure you want to delete the vacancy "<strong>{{ vacancy.title }}</strong>"?</h4>
+        <form method="post">
+            {% csrf_token %}
+            <a href="{% url 'recruitment:vacancy_list_admin' %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-danger">Yes</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {% if designation %}Edit Designation{% else %}Add New Designation{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">
+        {% if designation %}Edit Designation{% else %}Add New Designation{% endif %}
+    </h2>
+
+    <form method="post" class="border p-4 bg-light rounded shadow-sm">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Designation Title</label>
+            <input type="text" class="form-control" id="title" name="title"
+                   value="{{ designation.title|default_if_none:'' }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="4" required>{{ designation.description|default_if_none:'' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">
+            {% if designation %}Update{% else %}Save{% endif %}
+        </button>
+        <a href="{% url 'designations:designation_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

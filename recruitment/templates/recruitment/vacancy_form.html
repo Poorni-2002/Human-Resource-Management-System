@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm rounded-4">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">{{ form.instance.pk|yesno:"Edit Vacancy,Add Vacancy" }}</h4>
+        </div>
+        <div class="card-body">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                {% for field in form %}
+                    {% if field.name != 'published' %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+
+                            {% if field.name == 'salary' %}
+                                <div class="input-group">
+                                    <span class="input-group-text">Rs.</span>
+                                    {{ field|add_class:"form-control" }}
+                                </div>
+                            {% else %}
+                                {{ field|add_class:"form-control" }}
+                            {% endif %}
+
+                            {% if field.errors %}
+                                <div class="text-danger small">
+                                    {{ field.errors|striptags }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endfor %}
+
+
+                <!-- Published checkbox (styled differently) -->
+                <div class="form-check mb-3">
+                    {{ form.published|add_class:"form-check-input" }}
+                    <label class="form-check-label" for="{{ form.published.id_for_label }}">
+                        {{ form.published.label }}
+                    </label>
+                    {% if form.published.errors %}
+                        <div class="text-danger small">
+                            {{ form.published.errors|striptags }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success btn-lg rounded-pill">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

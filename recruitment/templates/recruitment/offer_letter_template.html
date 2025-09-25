@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Helvetica, sans-serif; line-height: 1.6; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .footer { position: fixed; bottom: 0; width: 100%; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Jaid Regency Hotel & Services Pvt. Ltd.</h1>
+        <h2>Offer Letter</h2>
+    </div>
+
+    <p>Date: {{ application.applied_at|date:"d M Y" }}</p>
+
+    <p>Dear {{ application.full_name }},</p>
+
+    <p>We are pleased to offer you the position of <strong>{{ application.vacancy.title }}</strong> at our company.</p>
+
+    <p>Location: {{ application.vacancy.location }}</p>
+    <p>Salary Offered: Rs.{{ application.vacancy.salary }}</p>
+
+    <p>We look forward to working with you. Please confirm your acceptance by replying to this email or visiting our office.</p>
+
+    <br><br>
+    <p>Sincerely,</p>
+    <p><strong>HR Manager</strong></p>
+
+    <div class="footer">
+        <p>Jaid Regency Hotel & Services Pvt. Ltd. | Confidential</p>
+    </div>
+</body>
+</html>

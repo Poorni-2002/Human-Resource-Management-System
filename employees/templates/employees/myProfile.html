@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 p-4">
+        <div class="d-flex flex-column flex-md-row align-items-center mb-4">
+            <!-- Profile Picture -->
+            <div class="me-md-4 mb-3 mb-md-0">
+                {% if employee.profile_picture %}
+                    <img src="{{ employee.profile_picture.url }}" alt="Profile Picture" class="rounded-circle border shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+                {% else %}
+                    <img src="https://via.placeholder.com/120" alt="Default Profile" class="rounded-circle border shadow-sm" style="width: 120px; height: 120px; object-fit: cover;">
+                {% endif %}
+            </div>
+
+            <!-- Name and Designation -->
+            <div>
+                <h3 class="fw-bold text-dark mb-1">Welcome, {{ employee.first_name }}!</h3>
+                <p class="text-muted mb-0">{{ employee.designation.title }}</p>
+            </div>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="row g-4 mt-3">
+            <div class="col-md-6">
+                <div class="p-3 border rounded bg-light">
+                    <strong>Email:</strong><br>
+                    <span class="text-muted">{{ employee.email }}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 border rounded bg-light">
+                    <strong>Phone:</strong><br>
+                    <span class="text-muted">{{ employee.phone }}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 border rounded bg-light">
+                    <strong>Date of Birth:</strong><br>
+                    <span class="text-muted">{{ employee.date_of_birth }}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 border rounded bg-light">
+                    <strong>NIC:</strong><br>
+                    <span class="text-muted">{{ employee.nic }}</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-3 border rounded bg-light">
+                    <strong>Civil Status:</strong><br>
+                    <span class="text-muted">{{ employee.civil_status }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

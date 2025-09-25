@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Dashboard Cards -->
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <h5 class="card-title">Total Employees</h5>
+                    <h2>{{ total_employees }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-success shadow h-100 py-2">
+                <div class="card-body">
+                    <h5 class="card-title">Total Designations</h5>
+                    <h2>{{ total_designations }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3 mb-4">
+            <div class="card text-white bg-danger shadow h-100 py-2">
+                <div class="card-body">
+                    <h5 class="card-title">Today on Leave</h5>
+                    <h2>{{ today_leaves }}</h2>
+                </div>
+            </div>
+        </div>
+
+        
+        
+            <div class="col-md-3 col-sm-6 mb-4">
+                <a href="{% url 'recruitment:application_list' %}" class="text-decoration-none">
+                    <div class="card shadow-sm border-0 rounded-4 p-3 position-relative text-center hover-shadow h-100">
+                        <div class="position-relative">
+                            <i class="bi bi-envelope-paper-fill text-primary" style="font-size: 2.5rem;"></i>
+
+                            {% if unread_count > 0 %}
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger fs-6">
+                                {{ unread_count }}
+                                <span class="visually-hidden">unread applications</span>
+                            </span>
+                            {% endif %}
+                        </div>
+                        <div class="mt-2 fw-semibold text-dark">
+                            Applications
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+
+
+
+    </div>
+</div>
+{% endblock %}
